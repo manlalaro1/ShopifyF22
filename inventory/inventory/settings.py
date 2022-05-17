@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
+    'items'
 ]
 
 MIDDLEWARE = [
@@ -83,6 +85,10 @@ DATABASES = {
         'HOST': 'db',
         'PORT': 5432,
     }
+}
+
+GRAPHENE = {
+    'SCHEMA':'inventory.schema.schema', 
 }
 
 # Password validation
