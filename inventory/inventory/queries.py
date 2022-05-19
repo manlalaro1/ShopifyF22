@@ -4,20 +4,20 @@ from items.models import Item
 
 class Query(graphene.ObjectType):
     all_items = graphene.List(ItemType)
-    item = graphene.Field(ItemType, itemId=graphene.ID())
+    item = graphene.Field(ItemType, itemId=graphene.String())
 
-def resolve_all_items(self, parent):
-    """GraphQL query for all Item objects
+    def resolve_all_items(self, parent):
+        """GraphQL query for all Item objects
 
-    Args:
-        None
+        Args:
+            None
 
-    Returns:
-        [Item]: QuerySet of Item objects
-    """
-    return Item.objects.all()
+        Returns:
+            [Item]: QuerySet of Item objects
+        """
+        return Item.objects.all()
 
-def resolve_item(self, parent, itemId):
+    def resolve_item(self, parent, itemId):
         """GraphQL query for Item object by ID
 
         Args:

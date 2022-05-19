@@ -21,5 +21,6 @@ services:
       - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - API_KEY=774f1700e1383d22d3b81d5cab4139ba
     depends_on:
       - db
