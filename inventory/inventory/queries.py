@@ -1,6 +1,7 @@
 import graphene
 from .types import ItemType
 from items.models import Item
+import os, requests
 
 class Query(graphene.ObjectType):
     all_items = graphene.List(ItemType)
@@ -26,4 +27,5 @@ class Query(graphene.ObjectType):
         Returns:
             Item: An Item object
         """
+        print(Item.objects.get(id=itemId))
         return Item.objects.get(id=itemId)

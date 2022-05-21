@@ -15,7 +15,13 @@ class ItemType(DjangoObjectType):
     weather = graphene.String()
     def resolve_weather(self, info):
         api_key = os.getenv("API_KEY")
-        city_ids = {"Miami": 4164138, "Los Angeles": 5368361, "Philadelphia": 4560349, "Chicago": 4887398, "Portland": 5746545}
+        city_ids = {
+            "Miami": 4164138, 
+            "Los Angeles": 5368361, 
+            "Philadelphia": 4560349,
+             "Chicago": 4887398,
+              "Portland": 5746545
+            }
         city_id = city_ids[self.storage_city]
         url = f"https://api.openweathermap.org/data/2.5/weather?id={city_id}&appid={api_key}"
         description = requests.get(url).json()['weather'][0]['description']
@@ -48,7 +54,7 @@ class UpdateItemInput(graphene.InputObjectType):
     def is_valid(self):
         cities = ["Los Angeles", "Philadelphia", "Portland", "Chicago", "Miami"]
 
-        if self.storage_city not in cities:
+        if self.storage_city and self.storage_city not in cities:
             raise ValueError("Invalid Location. Must be in list: 'Los Angeles' (CA), 'Philadelphia' (PA), 'Portland' (OR), 'Chicago' (IL), 'Miami' (FL)")
         else:
             return True

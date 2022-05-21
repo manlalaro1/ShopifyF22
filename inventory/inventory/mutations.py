@@ -61,8 +61,9 @@ class UpdateItem(graphene.Mutation):
     def mutate(self, info, itemId, input):
         if Item.objects.get(id=itemId) and input.is_valid():
             _item = Item.objects.get(id=itemId)
-            _item.name = input.name
-            _item.storage_city = input.storage_city
+            for k, v in input.items():
+                setattr(_item, k, v)
+            _item.save()
             return UpdateItem(updated=True, item=_item)
         return UpdateItem(updated=False, item=_item)
 
