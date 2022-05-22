@@ -60,6 +60,7 @@ This inventory API is a Django application with a GraphiQL interface.
 * [Django](https://www.djangoproject.com/)
 * [GraphQL](https://graphql.org/)
 * [PostgreSQL](https://www.postgresql.org/)
+* [Graphene Django](https://docs.graphene-python.org/)
 * [GraphiQL](https://github.com/graphql/graphiql)
 * [Docker](https://www.docker.com/)
 
