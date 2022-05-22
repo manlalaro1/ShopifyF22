@@ -1,20 +1,20 @@
 from graphene_django import DjangoObjectType, DjangoListField
-from items.models import Item
+from items.models import Item, Shipment
 from django.db import models
 import graphene
 import os, requests
 
 class ItemType(DjangoObjectType):
     """
-    GraphQL type to represent the Item model from models.Item
+    GraphQL type to represent the Item model
     """
     class Meta:
         model = Item
-        fields = ("id", "name", "storage_city")
+        fields = ("id", "name", "storage_city", "quantity")
 
     weather = graphene.String()
-    def resolve_weather(self, info):
-        api_key = os.getenv("API_KEY")
+    def resolve_weather(self, info): # method called during each Item GraphQL query
+        api_key = os.getenv("API_KEY") # API key pulled from docker-compose.yaml
         city_ids = {
             "Miami": 4164138, 
             "Los Angeles": 5368361, 
@@ -26,35 +26,58 @@ class ItemType(DjangoObjectType):
         url = f"https://api.openweathermap.org/data/2.5/weather?id={city_id}&appid={api_key}"
         description = requests.get(url).json()['weather'][0]['description']
         return description
-    
-class ItemInput(graphene.InputObjectType):
-    """
-    GraphQL input object of the Item model used in mutations.AddItem
-    """
-    id = graphene.ID()
-    name = graphene.String(required=True)
-    storage_city = graphene.String(required=True)
 
+class InputPayload(graphene.InputObjectType):
+    name = graphene.String()
+    storage_city = graphene.String()
+    quantity = graphene.Int()
+    
     def is_valid(self):
         cities = ["Los Angeles", "Philadelphia", "Portland", "Chicago", "Miami"]
 
         if self.storage_city not in cities:
-            raise ValueError("Invalid Location. Must be in list: 'Los Angeles' (CA), 'Philadelphia' (PA), 'Portland' (OR), 'Chicago' (IL), 'Miami' (FL)")
+            return False
         else:
             return True
+    
+class AddItemInput(InputPayload, graphene.InputObjectType):
+    """
+    GraphQL input object of the Item model used in mutations.AddItem
+    """
+    name = graphene.String(required=True)
+    storage_city = graphene.String(required=True)
+    quantity = graphene.Int(required=True)
 
-class UpdateItemInput(graphene.InputObjectType):
+class UpdateItemInput(InputPayload, graphene.InputObjectType):
     """
     GraphQL input object of the Item model used in mutations.UpdateItem
     """
-    id = graphene.ID()
     name = graphene.String(required=False)
     storage_city = graphene.String(required=False)
+    quantity = graphene.Int(required=False)
 
-    def is_valid(self):
-        cities = ["Los Angeles", "Philadelphia", "Portland", "Chicago", "Miami"]
+class ShipmentType(DjangoObjectType):
+    """
+    GraphQL type to represent the Shipment model from models.Shipment
+    """
+    class Meta:
+        model = Shipment
+        fields = "__all__"
+    
+    items = DjangoListField(ItemType)
+    def resolve_items(self, info):
+        return self.items.all()
 
-        if self.storage_city and self.storage_city not in cities:
-            raise ValueError("Invalid Location. Must be in list: 'Los Angeles' (CA), 'Philadelphia' (PA), 'Portland' (OR), 'Chicago' (IL), 'Miami' (FL)")
-        else:
-            return True
+class AddShipmentInput(InputPayload, graphene.InputObjectType):
+    """
+    GraphQL input object of the Shipment model used in mutations.AddShipment
+    """
+    storage_city = graphene.String(required=True)
+
+class UpdateShipmentInput(InputPayload, graphene.InputObjectType):
+    """
+    GraphQL input object of the Shipment model used in mutations.UpdateShipment
+    """
+    itemIds = graphene.List(graphene.Int, required=False)
+    storage_city = graphene.String(required=False)
+    quantity = graphene.Int(required=False)
