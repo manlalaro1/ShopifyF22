@@ -5,8 +5,8 @@ import os, requests
 
 class Query(graphene.ObjectType):
     all_items = graphene.List(ItemType)
-    item = graphene.Field(ItemType, itemId=graphene.String())
-    shipment = graphene.Field(ShipmentType, shipmentId=graphene.String())
+    item = graphene.Field(ItemType, id=graphene.Int())
+    shipment = graphene.Field(ShipmentType, id=graphene.Int())
     all_shipments = graphene.List(ShipmentType)
 
     def resolve_all_items(self, parent):
@@ -20,7 +20,7 @@ class Query(graphene.ObjectType):
         """
         return Item.objects.all()
 
-    def resolve_item(self, parent, itemId):
+    def resolve_item(self, parent, id):
         """GraphQL query for Item object by ID
 
         Args:
@@ -29,8 +29,8 @@ class Query(graphene.ObjectType):
         Returns:
             Item: An Item object
         """
-        print(Item.objects.get(id=itemId))
-        return Item.objects.get(id=itemId)
+        print(Item.objects.get(id=id))
+        return Item.objects.get(id=id)
 
     def resolve_all_shipments(self, parent):
         """GraphQL query for all Shipment objects
@@ -43,7 +43,7 @@ class Query(graphene.ObjectType):
         """
         return Shipment.objects.all()
     
-    def resolve_shipment(self, parent, shipmentId):
+    def resolve_shipment(self, parent, id):
         """GraphQL query for Shipment object by ID
 
         Args:
@@ -52,4 +52,4 @@ class Query(graphene.ObjectType):
         Returns:
             Shipment: A Shipment object
         """
-        return Shipment.objects.get(id=shipmentId)
+        return Shipment.objects.get(id=id)

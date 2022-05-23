@@ -1,0 +1,97 @@
+Add Item with input:
+mutation addItem {
+  addItem: addItem(input: { name: "test_item", storageCity: "Chicago", quantity: 122 }) {
+    item {
+      id
+      name
+      storageCity
+      quantity
+      weather
+    }
+    ok
+    errors
+  }
+}
+
+Delete Item by ID:
+mutation deleteShipment {
+  deleteShipment(id: 1) {
+    ok
+    errors
+  }
+}
+
+Update Item by ID with input:
+mutation updateItem {
+  updateItem(id: 2, input: {storageCity: "Portland", quantity:1000000}) {
+    item {
+      name
+      id
+      storageCity
+      weather
+      quantity
+    }
+    ok
+    errors
+  }
+}
+
+Add Shipment with associated Items and input:
+mutation addShipment {
+  addShipment(itemIds:[2,3], input: {storageCity: "Chicago", quantity: 4}) {
+      shipment {
+        id
+        items {
+          id
+          name
+          weather
+          storageCity
+          quantity
+        }
+      }
+    errors
+    ok
+  }
+}
+
+Delete Shipment by ID:
+mutation deleteShipment {
+  deleteShipment(id: 1) {
+    ok
+    errors
+  }
+}
+
+Update specific Items associated with Shipment:
+mutation updateShipment {
+  updateShipment(id: 1, itemIds: [2], input: {quantity: 121, storageCity: "Portland"}) {
+    ok
+    shipment {
+      items {
+        id
+        name
+        quantity
+        weather
+        storageCity
+      }
+    }
+    errors
+  }
+}
+
+Update all Items associated with Shipment:
+mutation updateShipment {
+  updateShipment(id: 1, input: {quantity: 1000, storageCity: "Portland"}) {
+    ok
+    shipment {
+      items {
+        id
+        name
+        quantity
+        weather
+        storageCity
+      }
+    }
+    errors
+  }
+}

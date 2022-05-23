@@ -1,0 +1,47 @@
+Find all Items:
+query {
+  allItems {
+    id
+    name
+    storageCity
+    weather
+    quantity
+  }
+}
+
+Find all Shipments:
+query {
+  allShipments {
+    id
+    items {
+      name
+      storageCity
+      weather
+      quantity
+    }
+  }
+}
+
+Find Item by ID:
+query {
+  item(id: 0) {
+    id
+    name
+    storageCity
+    weather
+    quantity
+  }
+}
+
+Find Shipment by ID:
+query {
+  shipment(id: 1) {
+    id
+    items {
+      name
+      storageCity
+      weather
+      quantity
+    }
+  }
+}
