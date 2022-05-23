@@ -104,7 +104,7 @@ Since this project is built to run in containers, `Docker` and `Docker-Compose` 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-This project utilizes the GraphiQL interface to visualize an inventory API. If you'd like to try it out for yourself, there is a repl running without containers [here](https://shopifyf22-1.manlalaro1.repl.co/).
+This project utilizes the GraphiQL interface to visualize an inventory API. If you'd like to try it out for yourself, there is a repl running without containers [here](https://shopifyf22-1.manlalaro1.repl.co/). You can also find test queries and mutations to try in [queries.txt](https://github.com/manlalaro1/ShopifyF22/blob/main/queries.txt) and [mutations.txt](https://github.com/manlalaro1/ShopifyF22/blob/main/queries.txt).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
