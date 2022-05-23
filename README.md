@@ -104,9 +104,7 @@ Since this project is built to run in containers, `Docker` and `Docker-Compose` 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-This project utilizes the GraphiQL interface to visualize GraphQL queries, mutations and types. 
-
-_For more examples, please refer to the [GraphiQL Documentation]([https://example.com](https://docs.sciencelogic.com/latest/Content/Web_Content_Dev_and_Integration/GraphQL_API/graphiql_browser.htm))_
+This project utilizes the GraphiQL interface to visualize an inventory API. If you'd like to try it out for yourself, there is a repl running without containers [here](https://shopifyf22-1.manlalaro1.repl.co/).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
